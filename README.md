@@ -1,8 +1,6 @@
 # DvgApps
 
 ### How to install `.DvgFiles`
-Type in the console:
+Before you start, make sure the `http` api is enabled. Then, type in the console:
 
     > pastebin run SKTUK0rb
-
-And it will start to install.
