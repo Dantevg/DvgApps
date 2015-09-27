@@ -1,6 +1,6 @@
 # DvgApps
 
-### How to install .DvgFiles
+### How to install `.DvgFiles`
 Type in the console:
 
     > pastebin run SKTUK0rb
