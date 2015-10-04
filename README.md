@@ -39,5 +39,10 @@ To use markup read mode, type:
 
     > read <file> markup
 
+The format of a marked up file is as follows. In this version, no spaces are allowed between the color and the `:`. This will be added in the future.
+
+    color:string
+
 #### Installation
-Pastebin: [`bw8EKigW`](http://pastebin.com/bw8EKigW)
+1. Download the file and place it in the following folder: `.DvgFiles/programs`. Pastebin: [`bw8EKigW`](http://pastebin.com/bw8EKigW).
+2. Every time you startup the computer, this program will become global.
