@@ -1,5 +1,10 @@
 # DvgApps
 
+### Contents
+* [DvgFiles](#dvgfiles)
+* [Read global](#read-global)
+* [Archive](#archive)
+
 ## DvgFiles <sup><sub>`v1.0`</sub></sup>
 For many programs I've made, you will need a DvgFiles installation. It comes with **one** invisible folder, you don't need to worry about many folders created. And, it gives all the apps that need it a place to put their own folder, all inside a single folder, `.DvgFiles`.
 
@@ -23,7 +28,9 @@ The folder structure is as follows:
                    config.cfg
 ```
 
-
+<br>
+<hr>
+<br>
 
 ## Read global <sup><sub>`v1.0`</sub></sup>
 Read is a global program, that means you can access it from anyehere on your computer, like `edit`, `ls`, `mv` and `cp`.
@@ -48,7 +55,9 @@ The format of a marked up file is as follows. In this version, no spaces are all
 1. Download the file and place it in the following folder: `.DvgFiles/programs`. Pastebin: [`bw8EKigW`](http://pastebin.com/bw8EKigW).
 2. Every time you startup the computer, this program will become global.
 
-
+<br>
+<hr>
+<br>
 
 ## Archive <sup><sub>`v2.1`</sub></sup>
 With archive, you can put all your files and folders (inside folders inside folders...) in one singe file. It works a bit like winrar of 7zip. This is very useful for downloading and installing many files and folders, so you only need to download **one single file!**
