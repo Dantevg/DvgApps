@@ -1,9 +1,9 @@
 # DvgApps
 
 ### Contents
-* [DvgFiles](#dvgfiles)
-* [Read global](#read-global)
-* [Archive](#archive)
+* [DvgFiles](#dvgfiles-v10)
+* [Read global](#read-global-v10)
+* [Archive](#archive-v21)
 
 ## DvgFiles <sup><sub>`v1.0`</sub></sup>
 For many programs I've made, you will need a DvgFiles installation. It comes with **one** invisible folder, you don't need to worry about many folders created. And, it gives all the apps that need it a place to put their own folder, all inside a single folder, `.DvgFiles`.
