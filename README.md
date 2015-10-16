@@ -6,7 +6,7 @@
 * [Archive](#archive-v21)
 
 ## DvgFiles <sup><sub>`v1.0`</sub></sup>
-For many programs I've made, you will need a DvgFiles installation. It comes with **one** invisible folder, you don't need to worry about many folders created. And, it gives all the apps that need it a place to put their own folder, all inside a single folder, `.DvgFiles`.
+For many programs I've made, you will need a DvgFiles installation. It comes with **one** invisible folder, you don't need to worry about many folders created, so your files will be clean. And, it gives all the apps that need it a place to put their own folder, all inside a single folder, `.DvgFiles`.
 
 #### Installation
 Pastebin: [`SKTUK0rb`](http://pastebin.com/SKTUK0rb)
@@ -47,20 +47,20 @@ To use markup read mode, type:
 
     > read <file> markup
 
-The format of a marked up file is as follows. In this version, no spaces are allowed between the color and the `:`. This will be added in the future.
+The format of a marked up file is as follows. In the current version, **no spaces are allowed between the color and the `:`**. This will be added in the future.
 
     color:string
 
 #### Installation
-1. Download the file and place it in the following folder: `.DvgFiles/programs`. Pastebin: [`bw8EKigW`](http://pastebin.com/bw8EKigW).
-2. Every time you startup the computer, this program will become global.
+Download the file and place it in the following folder: `.DvgFiles/programs`. Pastebin: [`bw8EKigW`](http://pastebin.com/bw8EKigW).
+Every time you startup the computer, this program will become global.
 
 <br>
 <hr>
 <br>
 
 ## Archive <sup><sub>`v2.1`</sub></sup>
-With archive, you can put all your files and folders (inside folders inside folders...) in one singe file. It works a bit like winrar of 7zip. This is very useful for downloading and installing many files and folders, so you only need to download **one single file!**
+With archive, you can put all your files and folders (inside folders inside folders...) in one singe file. It works a bit like winrar of 7zip. This is very useful for downloading and installing many files and folders, so you only need to download one single file!
 
 #### Usage
 To pack a folder, type in the console:
