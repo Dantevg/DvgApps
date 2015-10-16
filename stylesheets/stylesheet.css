@@ -10,11 +10,11 @@ body {
   color: #606c71; }
 
 a {
-  color: #1e6bb8 !important;
+  color: #1e6bb8;
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
-code a{
+.main-content code a{
   color: #1e6bb8; }
 
 .btn {
