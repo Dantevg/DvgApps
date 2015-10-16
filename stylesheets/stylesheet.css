@@ -10,9 +10,12 @@ body {
   color: #606c71; }
 
 a {
-  color: #1e6bb8 !important; }
+  color: #1e6bb8 !important;
+  text-decoration: none; }
   a:hover {
     text-decoration: underline; }
+code a{
+  color: #1e6bb8; }
 
 .btn {
   display: inline-block;
@@ -121,8 +124,6 @@ a {
   color: #383e41;
   background-color: #f3f6fa;
   border-radius: 0.3rem; }
-.main-content code a{
-  color: #1e6bb8; }
 .main-content pre {
   padding: 0.8rem;
   margin-top: 0;
