@@ -14,8 +14,8 @@ a {
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
-.main-content code a{
-  color: #1e6bb8; }
+.main-content a code{
+  color: #1e6bb8 !important; }
 
 .btn {
   display: inline-block;
