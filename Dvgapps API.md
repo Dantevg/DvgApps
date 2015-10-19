@@ -38,4 +38,12 @@ Prints the `menu`. Nothing special. Example output:
       I contain text, look:         here it is!
 
 #### `cfg.keyPressed( menu, key )`
-Handles the `os.pullEvent()` output.
+Handles the `os.pullEvent()` output when pressed on a key.
+
+#### `cfg.action( menu )`
+Does something when pressed on the enter key.
+
+#### `cfg.doMenu( menu )`
+Basically this is the only function you will need if you are just going to create a menu. `menu` can be a string or a table.  
+If `menu` is a table, it assumes that you already have loaded a file with `cfg.loadFile()`.  
+If it is a string, it assumes that you have given it a path and it will load that path itself.
