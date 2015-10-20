@@ -19,11 +19,6 @@ The exit action accepts 3 inputs:
 - "empty" for (wait, do I have to explain this?),
 - "exit"  for `x`, this is the standard setting.
 
-#### `dvgapps.checkupdate( url [, current] )`
-Checks if there is an update available on the `url` given.  
-If `current` is defined, it will return `true` or `false`, meaning there is an update avaliable (`true`) or not (`false`).  
-If `current` is omitted, it will return the latest version (the contents of the url).
-
 #### `cfg.loadFile( path )`
 Returns a prepared table from `path` for use with other `cfg.x()` functions.
 
