@@ -2,7 +2,7 @@
 Read is a global program, that means you can access it from anyehere on your computer, like `edit`, `ls`, `mv` and `cp`.
 It lets you read a file. Just read. No editing and such.
 
-And as a nice ~~little~~ addition, if you have an advanced computer, you can make readme files with color markup!
+And as a nice addition, if you have an advanced computer, you can make readme files with color markup!
 
 ### Usage
 To use normal read mode, type anywhere in the console:
