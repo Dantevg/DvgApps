@@ -17,7 +17,7 @@ or the minified version (minified using https://mothereff.in/lua-minifier):
 1. The `path/to/folder` means the path to the project folder that you want to pack.
 2. The `main relative run path` is an optional argument. If specified, leaf will use that **relative (!)** path to run if the newly created file is ran.
 3. The `new file path` is the path where the new `.leaf` file will be created.
-4. The fourth, optional argument, `-log` specifies wether leaf will print a log. Leaf will print a log if specified.
+4. The fourth, optional argument, `-log` specifies wether leaf will print a log. Leaf will print a log if specified (surprise!).
 
 ### Example
 If, for example, this is typed into the terminal:
