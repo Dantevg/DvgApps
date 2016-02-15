@@ -1,3 +1,9 @@
+## Version 2.9.2
+### Changelog
+- Function `centerColor` now accepts an optional, third argument, `y`, like the original function.
+
+<br>
+
 ## Version 2.9.1
 ### Changelog
 - Fixed leftover from old code
