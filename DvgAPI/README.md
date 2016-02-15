@@ -1,4 +1,4 @@
-# Dvg API <sup><sub>`v2.8.3`</sub></sup>
+# Dvg API <sup><sub>`v2.9.2`</sub></sup>
 ### Installation
 This API will automatically be installed together with `.DvgFiles`.
 
