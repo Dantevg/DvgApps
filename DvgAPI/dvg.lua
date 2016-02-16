@@ -3,11 +3,14 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.9.2
-      DATE    04-02-2016
-      GITHUB  github.com/Dantevg/DvgApps
+      VERSION 2.10
+      DATE    16-02-2016
+      GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
+
+version = "2.10"
+
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
 toName = {
@@ -90,14 +93,18 @@ function center( text, y )
   term.setCursorPos( curX,curY )
 end
 
-function box( x,y,w,h, bgcolor )
+box = {}
+function box.new( self, x,y,w,h, bgcolor )
   if not tonumber(x) or not tonumber(y) or not tonumber(w) or not tonumber(h) or not tonumber(bgcolor) then
     error( "Expected x, y, width, height, bgcolor" )
   end
-  term.setBackgroundColor( bgcolor )
-  for i = 1, h do
-    term.setCursorPos( x, y-1+i )
-    write( string.rep(" ", w) )
+  return setmetatable( {x=x, y=y, w=w, h=h, bgcolor=bgcolor}, {__index = box} )
+end
+function box:draw()
+  term.setBackgroundColor( self.bgcolor )
+  for i = 1, self.h do
+    term.setCursorPos( self.x, self.y-1+i )
+    write( string.rep(" ", self.w) )
   end
 end
 
