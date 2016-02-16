@@ -1,3 +1,16 @@
+## Version 2.10
+### Changelog
+- Changed `box` function. New usage:
+
+  ```lua
+  myBox = dvg.box:new( x,y,w,h, bgcolor )
+  myBox:draw()
+  ```
+
+- New `version` variable, which contains the version number
+
+<br>
+
 ## Version 2.9.2
 ### Changelog
 - Function `centerColor` now accepts an optional, third argument, `y`, like the original function.
