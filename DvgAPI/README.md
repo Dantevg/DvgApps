@@ -10,7 +10,7 @@ Creates a background with `color`.
 Prints a `string` with given `color`.
 
 #### `dvg.box:new( x, y, w, h, bgcolor )`
-Returns a table with given box properties, to be drawn later with `myBox:draw()`. Note the use of a colon instead of a dot.
+Returns a table with given box properties, to be drawn later with `myBox:draw()`. Note the use of a colon instead of a dot. You can edit the given values in the table returned. Ex: `myBox.x = 30`.
 
 #### `box:draw()`
 Draws a box on given coordinates (`x` and `y`) with the given size (`w` and `h`) and sets the given `bgcolor`. To use, replace `box` with the variable you stored `box:new()`'s returned values. Note the use of a colon instead of a dot.
