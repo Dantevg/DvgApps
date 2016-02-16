@@ -1,4 +1,4 @@
-# Dvg API <sup><sub>`v2.9.2`</sub></sup>
+# Dvg API <sup><sub>`v2.10`</sub></sup>
 ### Installation
 This API will automatically be installed together with `.DvgFiles`.
 
@@ -9,8 +9,11 @@ Creates a background with `color`.
 #### `dvg.printColor( color, string )`
 Prints a `string` with given `color`.
 
-#### `dvg.box( x, y, w, h, bgcolor )`
-Creates a box on given coordinates (`x` and `y`) with the given size (`w` and `h`) and sets the given `bgcolor`.
+#### `dvg.box:new( x, y, w, h, bgcolor )`
+Returns a table with given box properties, to be drawn later with `myBox:draw()`. Note the use of a colon instead of a dot.
+
+#### `box:draw()`
+Draws a box on given coordinates (`x` and `y`) with the given size (`w` and `h`) and sets the given `bgcolor`. To use, replace `box` with the variable you stored `box:new()`'s returned values. Note the use of a colon instead of a dot.
 
 #### `dvg.checkupdate( url [, current] )`
 Checks if there is an update available on the `url` given.  
