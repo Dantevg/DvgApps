@@ -1,4 +1,4 @@
-# Dvgapps API <sup><sub>`v0.9.11`</sub></sup>
+# Dvgapps API <sup><sub>`v0.9.17.10`</sub></sup>
 ### Installation
 *Release version coming soon...*
 
@@ -8,12 +8,19 @@ Creates a header with a title `text` and options `opt`.
 You don't have to set all options. The table `opt` has the following options:
 ```lua
 {
-  bgcolor = colors.blue,  -- color value for the background color
-  txtcolor = colors.white,-- color value for the text color
-  size = 1,               -- number (1 or 3) for the height of the header
-  action = "x",           -- string for the action icon; ("x", "<" or " ")
+  bgcolor = colors.blue,     -- color value for the background color
+  txtcolor = colors.white,   -- color value for the text color
+  size = 1,                  -- number (1 or 3) for the height of the header
+  action = "x",              -- string for the action icon; ("x", "<" or " ")
+  btncolor = colors.lightBlue-- the background color for the buttons
+  btntxtcolor = colors.white -- the text color for the buttons
+  btns = {
+    top = {}                 -- table with optional button names, number for space
+    bottom = {}              -- same as above, but underneath the title. Only for size = 5
+  }
 }
 ```
+Returns: if buttons specified, table with starting and ending position of each button, else [nil].
 
 #### `dvgapps.cfg.loadFile( path )`
 Returns a prepared table from `path` for use with other `cfg` functions.  
@@ -67,3 +74,7 @@ Does something when pressed on the enter key.
 Basically this is the only function you will need if you are just going to create a menu. `menu` can be a string or a table.
 * If `menu` is a table, it assumes that you already have loaded a file with `cfg.loadFile()`.  
 * If it is a string, it assumes that you have given it a path and it will load that path itself.
+
+[nil]: http://www.computercraft.info/wiki/Nil_(type)
+[string]: http://www.computercraft.info/wiki/String_(type)
+[table]: http://www.computercraft.info/wiki/Table_(type)
