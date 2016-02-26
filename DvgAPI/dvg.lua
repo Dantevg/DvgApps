@@ -9,11 +9,11 @@
 
 ]]--
 
-version = "2.10"
+version = "2.11"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
-toName = {
+colorToName = {
   [1] = "white",
   [2] = "orange",
   [4] = "magenta",
@@ -31,7 +31,7 @@ toName = {
   [16384] = "red",
   [32768] = "black",
 }
-toColor = {
+nameToColor = {
   ["white"] = 1,
   ["orange"] = 2,
   ["magenta"] = 4,
@@ -49,6 +49,8 @@ toColor = {
   ["red"] = 16384,
   ["black"] = 32768,
 }
+toName = colorToName
+toColor = nameToColor
 
 function setTextColor( color )
   term.setTextColor( color )
