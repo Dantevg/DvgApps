@@ -1,3 +1,10 @@
+## Version 2.11
+### Changelog
+- Added function: `fill`. Fills a string to given length with (optional) given character.
+- Renamed tables: `toName` and `toColor` to `colorToName` and `nameToColor`. Old names are still usable.
+
+<br>
+
 ## Version 2.10
 ### Changelog
 - Changed `box` function. New usage:
