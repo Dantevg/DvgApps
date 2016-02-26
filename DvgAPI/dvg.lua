@@ -3,8 +3,8 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.10
-      DATE    16-02-2016
+      VERSION 2.11
+      DATE    26-02-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
@@ -91,6 +91,23 @@ function center( text, y )
   term.setCursorPos( x, y and y or curY )
   write( text )
   term.setCursorPos( curX,curY )
+end
+
+function fill( txt, to, char )
+  if type( txt ) ~= "string" or type( to ) ~= "number" then
+    error( "Expected string, number" )
+  end
+  if char and type( char ) ~= "string" then
+    error( "Expected string, number [,string]" )
+  end
+  while #txt <= to do
+    if char then
+      txt = txt..char
+    else
+      txt = txt.." "
+    end
+  end
+  return txt
 end
 
 box = {}
