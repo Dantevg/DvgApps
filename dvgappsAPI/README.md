@@ -1,4 +1,4 @@
-# Dvgapps API <sup><sub>`v0.9.17.10`</sub></sup>
+# Dvgapps API <sup><sub>`v0.9.17.20`</sub></sup>
 ### Installation
 *Release version coming soon...*
 
@@ -8,15 +8,16 @@ Creates a header with a title `text` and options `opt`.
 You don't have to set all options. The table `opt` has the following options:
 ```lua
 {
-  bgcolor = colors.blue,     -- color value for the background color
-  txtcolor = colors.white,   -- color value for the text color
-  size = 1,                  -- number (1 or 3) for the height of the header
-  action = "x",              -- string for the action icon; ("x", "<" or " ")
-  btncolor = colors.lightBlue-- the background color for the buttons
-  btntxtcolor = colors.white -- the text color for the buttons
+  [name] = [standard setting]
+  bgcolor = colors.blue,      -- the background color
+  txtcolor = colors.white,    -- the text color
+  size = 1,                   -- the header height, 1, 3 or 5 (for many btns)
+  action = "x"                -- the action icon, "<", "x" or " " (space)
   btns = {
-    top = {}                 -- table with optional button names, number for space
-    bottom = {}              -- same as above, but underneath the title. Only for size = 5
+    top = {}                  -- table with optional button names, number for space
+    bottom = {}               -- same as above, but underneath the title. Only for size = 5
+    bgcolor = colors.lightBlue-- the background color for the buttons
+    txtcolor = colors.white   -- the text color for the buttons
   }
 }
 ```
