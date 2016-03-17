@@ -3,13 +3,13 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.11
-      DATE    26-02-2016
+      VERSION 2.12
+      DATE    17-03-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
 
-version = "2.11"
+version = "2.12"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
@@ -110,6 +110,21 @@ function fill( txt, to, char )
     end
   end
   return txt
+end
+
+function compareVersions( v1, v2 )
+  local t1 = {}
+  local t2 = {}
+  for v in string.gmatch( v1, "%P+" ) do table.insert( t1, v ) end
+  for v in string.gmatch( v2, "%P+" ) do table.insert( t2, v ) end
+  for i = 1, math.max( #t1, #t2 ) do
+    if t1[i] > t2[i] then
+      return true, i
+    elseif t1[i] < t2[i] then
+      return false, i
+    end
+  end
+  return false
 end
 
 box = {}
