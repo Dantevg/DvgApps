@@ -1,3 +1,9 @@
+## Version 2.12
+### Changelog
+- Added function: `compareVersions( v1, v2 )`. It checks if v1 > v2
+
+<br>
+
 ## Version 2.11
 ### Changelog
 - Added function: `fill`. Fills a string to given length with (optional) given character.
