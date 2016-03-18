@@ -1,6 +1,6 @@
 ## Version 2.12
 ### Changelog
-- Added function: `compareVersions( v1, v2 )`. It checks if v1 > v2
+- Added function: `compareVersions( v1, v2 )`. It checks if `v1 > v2`
 
 <br>
 
