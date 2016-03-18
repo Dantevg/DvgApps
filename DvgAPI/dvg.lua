@@ -95,36 +95,21 @@ function center( text, y )
   term.setCursorPos( curX,curY )
 end
 
-function fill( txt, to, char )
-  if type( txt ) ~= "string" or type( to ) ~= "number" then
+function fill( text, to, char )
+  if type( text ) ~= "string" or type( to ) ~= "number" then
     error( "Expected string, number" )
   end
   if char and type( char ) ~= "string" then
     error( "Expected string, number [,string]" )
   end
-  while #txt <= to do
+  while #text <= to do
     if char then
-      txt = txt..char
+      text = text..char
     else
-      txt = txt.." "
+      text = text.." "
     end
   end
-  return txt
-end
-
-function compareVersions( v1, v2 )
-  local t1 = {}
-  local t2 = {}
-  for v in string.gmatch( v1, "%P+" ) do table.insert( t1, v ) end
-  for v in string.gmatch( v2, "%P+" ) do table.insert( t2, v ) end
-  for i = 1, math.max( #t1, #t2 ) do
-    if t1[i] > t2[i] then
-      return true, i
-    elseif t1[i] < t2[i] then
-      return false, i
-    end
-  end
-  return false
+  return text
 end
 
 box = {}
@@ -143,6 +128,9 @@ function box:draw()
 end
 
 function scroll( text, height, offset )
+  if type( text ) ~= "table" or type( height ) ~= "number" or type( offset ) ~= "number" then
+    error( "Expected table text, number height, number offset" )
+  end
   for i = 1, offset do
     if #text <= height then break end
     table.remove( text, 1 )
@@ -177,6 +165,24 @@ function checkupdate( url, current )
       return "Could not connect to server"
     end
   end
+end
+
+function compareVersions( v1, v2 )
+  if not v1 or not v2 or type( v1 ) ~= "string" or type( v2 ) ~= "string" then
+    error( "Expected string v1, string v2" )
+  end
+  local t1 = {}
+  local t2 = {}
+  for v in string.gmatch( v1, "%P+" ) do table.insert( t1, v ) end
+  for v in string.gmatch( v2, "%P+" ) do table.insert( t2, v ) end
+  for i = 1, math.max( #t1, #t2 ) do
+    if not t2[i] or t1[i] > t2[i] then
+      return true, i
+    elseif not t1[i] or t1[i] < t2[i] then
+      return false, i
+    end
+  end
+  return false
 end
 
 
