@@ -2,7 +2,8 @@
 Executable Lua Archive File (.leaf) is a program to make an executable file from your project folder. It uses functions from [archive](https://github.com/Dantevg/DvgApps/tree/master/Archive) to pack and temporary unpack your folder into a single, runnable file.
 
 ### Installation
-To install leaf, type in the shell:
+To install leaf, you first need to install [DvgFiles](https://github.com/Dantevg/DvgApps/blob/master/DvgFiles.md).
+Then, type in the shell:
 
     > pastebin get 8nfm71ms leaf
 
@@ -10,12 +11,13 @@ or the minified version (minified using https://mothereff.in/lua-minifier):
 
     > pastebin get 3Ut3TdsF leaf
 
+and move it to the `APIs` folder (`/.DvgFiles/APIs/`).
 ### Usage
 
     > leaf <path/to/folder> [main relative run path] <new file path> [-log]
 
 1. The `path/to/folder` means the path to the project folder that you want to pack.
-2. The `main relative run path` is an optional argument. If specified, leaf will use that **relative (!)** path to run if the newly created file is ran.
+2. The `main relative run path` is an optional argument. If specified, leaf will use that **relative** path to run if the newly created file is ran.
 3. The `new file path` is the path where the new `.leaf` file will be created.
 4. The fourth, optional argument, `-log` specifies wether leaf will print a log. Leaf will print a log if specified (surprise!).
 
