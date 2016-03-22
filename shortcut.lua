@@ -7,7 +7,6 @@
 
 local path = string.lower( shell.getRunningProgram() )
 
-for cProg in string.gmatch( path, "(%l+)" ) do
-  print( cProg )
-  shell.run( "/.DvgFiles/data/"..cProg.."/"..cProg )
+for prog in string.gmatch( path, "(%l+)" ) do
+  shell.run( "/.DvgFiles/data/"..prog.."/"..prog )
 end
