@@ -1,3 +1,11 @@
+## Version 2.13
+### Changelog
+- Added markers for deprecated functions
+- Updated function switchBool. It is more effective and shorter now: from 5 to 1 lines
+- Function switchBool is now deprecated. It will still be usable in future releases, but will be removed some time. Instead, use the single line of code also used in the function: `bool = not bool` ([Line 234](https://github.com/Dantevg/DvgApps/blob/bcc30b0d51d3b84550d9df2316ea3524b5430115/DvgAPI/dvg.lua#L234))
+
+<br>
+
 ## Version 2.12
 ### Changelog
 - Added function: `compareVersions( v1, v2 )`. It checks if `v1 > v2`
