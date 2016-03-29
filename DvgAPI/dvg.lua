@@ -3,13 +3,13 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.12
-      DATE    17-03-2016
+      VERSION 2.13
+      DATE    29-03-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
 
-version = "2.12"
+version = "2.13"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
@@ -49,8 +49,8 @@ nameToColor = {
   ["red"] = 16384,
   ["black"] = 32768,
 }
-toName = colorToName
-toColor = nameToColor
+toName = colorToName -- Deprecated
+toColor = nameToColor -- Deprecated
 
 function setTextColor( color )
   term.setTextColor( color )
@@ -230,12 +230,8 @@ function isInt( num )
   end
 end
 
-function switchBool( bool )
-  if bool == true then
-    return false
-  else
-    return true
-  end
+function switchBool( bool ) -- Deprecated, use code below
+  return not bool
 end
 
 function inAny( checkIn, checkFor )
