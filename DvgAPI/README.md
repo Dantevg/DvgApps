@@ -1,4 +1,4 @@
-# Dvg API <sup><sub>`v2.12`</sub></sup>
+# Dvg API <sup><sub>`v2.13`</sub></sup>
 ### Installation
 This API will automatically be installed together with `.DvgFiles`.
 
@@ -65,11 +65,22 @@ Returns `true` if the `val` given is a boolean. If `txt` is given and `true`, a 
 #### `dvg.isInt( num )`
 Checks wether the value given is a whole number (`46` and `1180` till return `true`, `1.5` and `673.139` will return false).
 
-#### `dvg.switchBool( bool )`
-Switches `bool`. If `bool == true`, returns `false`. If `bool == false`, returns `true`.
-
 #### `dvg.inAny( checkIn, checkFor )`
 Checks if `checkFor` exists as value in `checkIn`. Returns the number of `checkIn` inside `checkFor`.
 
 #### `dvg.compass()`
 **Turtle function** Returns the direction the turtle is facing. (north, east, south, west).
+
+---
+
+### Deprecated functions
+These functions are old, so don't use them in your programs.
+Don't worry if you still have an older program, the functions will not be removed immediately, but finally they will be removed in a future release. (about half a year after its date)
+
+#### `dvg.switchBool( bool )` <sup><sub>`v2.13` `29-03-2016`</sub></sup>
+Switches `bool`. If `bool == true`, returns `false`. If `bool == false`, returns `true`.  
+**Replacement:** Use `bool = not bool`, like the function [does now](https://github.com/Dantevg/DvgApps/blob/bcc30b0d51d3b84550d9df2316ea3524b5430115/DvgAPI/dvg.lua#L234)
+
+#### `dvg.toName` and `dvg.toColor` <sup><sub>`03-2016`</sub></sup>
+Tables with color values and names (like in `colors.*`, the `*` replaces the name in these tables).  
+**Replacement:** Use `dvg.colorToName` and `dvg.nameToColor`
