@@ -1,274 +1,123 @@
 --[[
 
-      Dvg API
+      RedWeb (rw) API
       by DvgCraft
 
-      VERSION 2.13
-      DATE    29-03-2016
-      GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
+      VERSION  0.9.10
+      DATE     04-04-2016
 
 ]]--
 
-version = "2.13"
+--[[ URL Explanation
+                              URL
+      |------------------------------------------------|
+      protocol                      URL
+      |------|     |-----------------------------------|
+      protocol       domain          path         args
+      |------|     |-------|   |--------------| |------|
+       web     ://  bank.cc  /  files/usr/john   doThis
+]]--
 
 
-sides = { "right", "left", "top", "bottom", "back", "front" }
-colorToName = {
-  [1] = "white",
-  [2] = "orange",
-  [4] = "magenta",
-  [8] = "lightBlue",
-  [16] = "yellow",
-  [32] = "lime",
-  [64] = "pink",
-  [128] = "gray",
-  [256] = "lightGray",
-  [512] = "cyan",
-  [1024] = "purple",
-  [2048] = "blue",
-  [4096] = "brown",
-  [8192] = "green",
-  [16384] = "red",
-  [32768] = "black",
-}
-nameToColor = {
-  ["white"] = 1,
-  ["orange"] = 2,
-  ["magenta"] = 4,
-  ["lightBlue"] = 8,
-  ["yellow"] = 16,
-  ["lime"] = 32,
-  ["pink"] = 64,
-  ["gray"] = 128,
-  ["lightGray"] = 256,
-  ["cyan"] = 512,
-  ["purple"] = 1024,
-  ["blue"] = 2048,
-  ["brown"] = 4096,
-  ["green"] = 8192,
-  ["red"] = 16384,
-  ["black"] = 32768,
-}
-toName = colorToName -- Deprecated
-toColor = nameToColor -- Deprecated
-
-function setTextColor( color )
-  term.setTextColor( color )
-  return dvg
-end
-function setBackgroundColor( color )
-  term.setBackgrundColor( color )
-  return dvg
-end
-
-function bg( color )
-  term.setBackgroundColor( color )
-  term.clear()
-end
-function writeColor( string, color )
-  term.setTextColor( color )
-  write( string )
-end
-function printColor( string, color )
-  term.setTextColor( color )
-  print( string )
-end
-function centerColor( string, color, y )
-  term.setTextColor( color )
-  center( string, y )
-end
-function writePos( string, x,y )
-  term.setCursorPos( x, y )
-  write( string )
-end
-function printPos( string, x,y )
-  term.setCursorPos( x, y )
-  print( string )
-end
-
-function center( text, y )
-  local curX, curY = term.getCursorPos()
-  local w, _ = term.getSize()
-  x = math.ceil( ( w/2 ) - ( string.len(text)/2 ) + 1 )
-  term.setCursorPos( x, y and y or curY )
-  write( text )
-  term.setCursorPos( curX,curY )
-end
-
-function fill( text, to, char )
-  if type( text ) ~= "string" or type( to ) ~= "number" then
-    error( "Expected string, number" )
-  end
-  if char and type( char ) ~= "string" then
-    error( "Expected string, number [,string]" )
-  end
-  while #text <= to do
-    if char then
-      text = text..char
-    else
-      text = text.." "
+-- Functions
+function separate( url, getPath )
+  if getPath then
+    local _,_, domain, path, args = string.find( url, "([^/]+)(%S*)(.*)" ) -- doma.in / path/to/file arg1 arg2
+    return domain, path, args:sub( 2 )
+  else
+    local _,_, protocol, url = string.find( url, "(%a+)://(.+)" ) -- protocol :// url
+    if not url then
+      local protocol, _,_, url = "web", string.find( url, "(.+)" ) -- url
     end
-  end
-  return text
-end
-
-box = {}
-function box.new( self, x,y,w,h, bgcolor )
-  if not tonumber(x) or not tonumber(y) or not tonumber(w) or not tonumber(h) or not tonumber(bgcolor) then
-    error( "Expected x, y, width, height, bgcolor" )
-  end
-  return setmetatable( {x=x, y=y, w=w, h=h, bgcolor=bgcolor}, {__index = box} )
-end
-function box:draw()
-  term.setBackgroundColor( self.bgcolor )
-  for i = 1, self.h do
-    term.setCursorPos( self.x, self.y-1+i )
-    write( string.rep(" ", self.w) )
+    return protocol, url
   end
 end
 
-function scroll( text, height, offset )
-  if type( text ) ~= "table" or type( height ) ~= "number" or type( offset ) ~= "number" then
-    error( "Expected table text, number height, number offset" )
-  end
-  for i = 1, offset do
-    if #text <= height then break end
-    table.remove( text, 1 )
-  end
-  while #text > height do
-    table.remove( text )
-  end
-  return text
-end
-
-
-function checkupdate( url, current )
-  if type( url ) ~= "string" then
-    error( "Expected string URL, [string version]" )
+function getWebpage( protocol, url )
+  if protocol ~= "redweb" and protocol ~= "web" and protocol ~= "app" then
+    return "Invalid protocol. (redweb, web, app)", false
   end
 
-  http.request( url )
-  while true do
-    local event, url, source = os.pullEvent()
-    if event == "http_success" then
-      local version = source.readAll()
-      if current then
-        if current == version then
-          return false
+  local webpage = ""
+
+  if protocol == "redweb" then
+
+    if url == "home" then
+      local file = fs.open( path.."/home", "r" )
+      webpage = file.readAll()
+      file.close()
+      return webpage, true
+    elseif url == "settings" then
+      local file = fs.open( path.."/settings", "r" )
+      webpage = file.readAll()
+      file.close()
+      return webpage, true
+    end
+
+  elseif protocol == "web" then
+
+    rednet.broadcast( url, "DVG_REDWEB_IDS_REQUEST" )
+    local ID, webServer = rednet.receive( "DVG_REDWEB_IDS_ANSWER", 1 )
+    if not webServer then
+      return "ID server offline", false
+    elseif type( webServer ) == "string" then
+      return webServer, false
+    end
+
+    rednet.send( webServer, {ID=os.getComputerID(), url=url}, "DVG_REDWEB_WEBSITE_REQUEST" )
+    _, webpage = rednet.receive( "DVG_REDWEB_WEBSITE_ANSWER", 1 )
+    if not webpage then
+      return "Webserver offline", false
+    elseif type( webpage ) == "string" and webpage:sub( 1,3 ) == "ERR" then
+      return webpage:sub( 5 ), false
+    end
+    return webpage, true
+
+  elseif protocol == "app" then
+
+    local domain, path = separate( url, true )
+    if fs.isDir( "/.DvgFiles/data/"..app ) then
+      local file = ""
+      if not path or path == "" then -- No path specified
+        if fs.exists( "/.DvgFiles/data/"..app.."/"..app ) then -- /data/{name}/{name}
+          file = fs.open( "/.DvgFiles/data/"..app.."/"..app, "r" )
+        elseif fs.exists( "/.DvgFiles/data/"..app.."/run" ) then -- /data/{name}/run
+          file = fs.open( "/.DvgFiles/data/"..app.."/run", "r" )
         else
-          return true
+          return "No such app", false
         end
-      else
-        return version
+      else -- Path specified
+        if fs.exists( "/.DvgFiles/data/"..app.."/"..path ) then
+          file = fs.open( "/.DvgFiles/data/"..app.."/"..path, "r" )
+        else
+          return "No such file", false
+        end
+      end -- End if path
+      webpage = file.readAll()
+      file.close()
+      return webpage, true
+    end
+
+  end --End if protocol
+end
+
+function doWebpage( webpage )
+  fWebpage = loadstring( webpage )
+  local goto = ""
+
+  local function runWebpage()
+    goto = fWebpage()
+  end
+
+  local function getExit()
+    while true do
+      local event, key = os.pullEvent( "key" )
+      if key == keys[ rwSettings.exitKey.val ] then
+        break
       end
-    elseif event == "http_failure" then
-      return "Could not connect to server"
     end
   end
-end
-
-function compareVersions( v1, v2 )
-  if not v1 or not v2 or type( v1 ) ~= "string" or type( v2 ) ~= "string" then
-    error( "Expected string v1, string v2" )
-  end
-  local t1 = {}
-  local t2 = {}
-  for v in string.gmatch( v1, "%P+" ) do table.insert( t1, v ) end
-  for v in string.gmatch( v2, "%P+" ) do table.insert( t2, v ) end
-  for i = 1, math.max( #t1, #t2 ) do
-    if not t2[i] or t1[i] > t2[i] then
-      return true, i
-    elseif not t1[i] or t1[i] < t2[i] then
-      return false, i
-    end
-  end
-  return false
-end
-
-
-function toBool( var )
-  if var == true or var == "true" or var == "1" or var == 1 then
-    return true
-  elseif var == false or var == "false" or var == "0" or var == 0 then
-    return false
-  end
-end
-function toInt( var )
-  if var == true or var == "true" or var == "1" or var == 1 then
-    return 1
-  elseif var == false or var == "false" or var == "0" or var == 0 then
-    return 0
-  end
-end
-
-function isSide( side )
-  for i = 1, 6 do
-    if side == sides[i] then
-      return i
-    end
-  end
-  return false
-end
-function isBool( var, txt )
-  if txt then
-    if var == true or var == "true" then
-      return true
-    elseif var == false or var == "false" then
-      return false
-    end
-  else
-    if var == true or var == false then
-      return true
-    end
-  end
-end
-function isInt( num )
-  if math.floor( num ) == num and math.ceil( num ) == num then
-    return true
-  else
-    return false
-  end
-end
-
-function switchBool( bool ) -- Deprecated, use code below
-  return not bool
-end
-
-function inAny( checkIn, checkFor )
-  if checkIn == nil or type( checkIn ) ~= "table" or checkFor == nil then
-    error("Expected table, value")
-  end
-  for i = 1, #checkIn do
-    if checkIn[i] == checkFor then
-      return i
-    end
-  end
-  return false
-end
-
-
-function compass()
-  if not turtle then
-    error( "This function is only for turtles" )
-  end
-  local x1, y1, z1 = gps.locate()
-  if not x1 then return nil end
-  success = turtle.forward()
-  if not success then return nil end
-  x2, y2, z2 = gps.locate()
-  if not x2 then return nil end
-  turtle.back()
-
-  if z2 > z1 then
-    facing = "north"
-  elseif z2 < z1 then
-    facing = "south"
-  elseif x2 > x1 then
-    facing = "east"
-  elseif x2 < x1 then
-    facing = "west"
-  else
-    return nil
-  end
-  return facing
+  
+  parallel.waitForAny( getExit, runWebpage )
+  return goto
 end
