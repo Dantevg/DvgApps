@@ -1,3 +1,9 @@
+## Version 2.14
+### Changelog
+- Added function: `openRednet()`. Opens the first wireless modem it finds.
+
+<br>
+
 ## Version 2.13
 ### Changelog
 - Added markers for deprecated functions
