@@ -44,8 +44,8 @@ Checks if there is an update available on the `url` given.
 If `current` is defined, it will return `true` or `false`, meaning there is an update avaliable (`true`) or not (`false`).  
 If `current` is omitted, it will return the latest version (the contents of the url).
 
-#### `dvg.compareVersions( v1, v2 )` <sup><sub>`2.12`</sub></sup>
-Compares the two versions given. It checks if `v1 > v2`.  
+#### `dvg.compareVersions( new, old )` <sup><sub>`2.12`</sub></sup>
+Compares the two versions given. It checks if `new > old`.  
 Returns `true` or `false` wether the comparison stated succeeded. Also returns the number of comparisons needed:
 ```lua
 dvg.compareVersions( "1.0.32", "1.2.8" ) -- False, 2
@@ -67,6 +67,11 @@ Checks wether the value given is a whole number (`46` and `1180` till return `tr
 
 #### `dvg.inAny( checkIn, checkFor )`
 Checks if `checkFor` exists as value in `checkIn`. Returns the number of `checkIn` inside `checkFor`.
+
+#### `dvg.openRednet()` <sup><sub>`2.14`</sub></sup>
+Opens the first wireless modem it finds.
+If it could find a wireless modem, returns 1 argument, `true`.  
+If it could not find a wireless modem, returns `false` with a string containing the error message (`"No modems"` or `"No wireless modem"`).
 
 #### `dvg.compass()`
 **Turtle function** Returns the direction the turtle is facing. (north, east, south, west).
