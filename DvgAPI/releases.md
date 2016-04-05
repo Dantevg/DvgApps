@@ -103,5 +103,5 @@
 
 <br>
 
-## Versio 2.0
+## Version 2.0
 Initial official version
