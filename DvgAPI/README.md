@@ -27,7 +27,7 @@ Prints or writes `string` at given positions.
 #### `dvg.center( text [, y] )`
 Centers given `text` horizontally. If `y` is given, centers at given `y`, else centers at current position.
 
-#### `dvg.fill( text, to [, char] )`
+#### `dvg.fill( text, to [, char] )` <sup><sub>`2.11`</sub></sup>
 Fills `text` length to `to`, with spaces or `char`.
 
 #### `dvg.box:new( x, y, w, h, bgcolor )`
@@ -39,7 +39,7 @@ Draws a box on given coordinates (`x` and `y`) with the given size (`w` and `h`)
 #### `dvg.scroll( text, height, offset )`
 Returns table `text` with stripped ends, so it fits in the `height`. `Offset` specifies the height already scrolled.
 
-#### `dvg.read( [input [, exitEvent [, exitParam, exitVal]] ] )`
+#### `dvg.read( [input [, exitEvent [, exitParam, exitVal]] ] )` <sup><sub>`2.15`</sub></sup>
 An alternative to the default `read()` function, but works very different. It is a function that lets the user press just one key, and it will modify the `input` it gets and return it. If `input` is omitted, it will use an empty string.  
 **Functions:** (standard read functions in *italics*)
 
