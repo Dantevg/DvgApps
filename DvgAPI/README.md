@@ -37,7 +37,42 @@ Returns a table with given box properties, to be drawn later with `myBox:draw()`
 Draws a box on given coordinates (`x` and `y`) with the given size (`w` and `h`) and sets the given `bgcolor`. To use, replace `box` with the variable you stored `box:new()`'s returned values. Note the use of a colon instead of a dot.
 
 #### `dvg.scroll( text, height, offset )`
-Retorns table `text` with stripped ends, so it fits in the `height`. `Offset` specifies the height already scrolled.
+Returns table `text` with stripped ends, so it fits in the `height`. `Offset` specifies the height already scrolled.
+
+#### `dvg.read( [input [, exitEvent [, exitParam, exitVal]] ] )`
+An alternative to the default `read()` function, but works very different. It is a function that lets the user press just one key, and it will modify the `input` it gets and return it. If `input` is omitted, it will use an empty string.  
+**Functions:** (standard read functions in *italics*)
+
+- *If the user presses a printable key, that char is added to`input`.*
+- *If the user presses `backspace`, it will remove the last character from `input`.*
+- *If the user presses `enter`, it returns `input` and a boolean `true`.*
+- If `exitEvent` is specified and that specific event is pulled:
+  - If `exitParam` and `exitVal` are specified, and if `param[exitParam] == exitVal`.
+  - If `exitParam` and `exitVal` are specified, it breaks.
+
+**Returns:**
+
+1. string `input`. The input that it has received and modified.
+2. boolean (or `nil`) `userPresedEnter` or `enterPressed`. If the user pressed enter, this will be `true`, so you can decide to use the input or not. If the `exitEvent` if pulled, returns nil.
+3. boolean (or `nil`) `continue`. This will be `true` if the user only pressed a char. If the user presses `enter` or the `exitEvent` is pulled, this will be nil.
+
+**Beware** that return values 2 and 3 will not always be a boolean. When you would expect `false`, it returns `nil` instead.
+
+**Example usage:**
+```lua
+local input = "" -- Store the user's input
+while true do -- Loop to get every key
+  term.setCursorBlink( true )
+  term.clear()
+  term.setCursorPos( 1,1 )
+  write( input ) -- Write the input so far
+  input, enterPressed, continue = dvg.read( input, "key", 1, keys.leftCtrl )
+  if not continue then -- Do not continue to get chars
+    if enterPressed then print() print( "Your input was "..input ) end -- User submitted by pressing enter
+    break -- Stop getting chars
+  end
+end
+```
 
 #### `dvg.checkupdate( url [, current] )`
 Checks if there is an update available on the `url` given.  
