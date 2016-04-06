@@ -155,26 +155,26 @@ function read( input, exitEvent, exitParam, exitVal )
     if event == "key" then
 
       if exitEvent == "key" and (not exitParam or p[exitParam] == exitVal) then
-        return input, false
+        return input, false, false
       else
         if p[1] == keys.backspace then
           return input:sub( 1,-2 ), false, true
         elseif p[1] == keys.enter then
-          return input, true
+          return input, true, false
         end
       end -- End if exitEvent
 
     elseif event == "char" then
 
       if exitEvent == "char" then
-        if not exitParam or p[exitParam] == exitVal then return input, false end
+        if not exitParam or p[exitParam] == exitVal then return input, false, false end
       else
         return input..p[1], false, true
       end
 
     elseif event == exitEvent then
 
-      if not exitParam or p[exitParam] == exitVal then return input, false end
+      if not exitParam or p[exitParam] == exitVal then return input, false, false end
 
     end -- End if event
   end -- End while true
