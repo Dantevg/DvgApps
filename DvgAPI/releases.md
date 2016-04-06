@@ -1,3 +1,7 @@
+## Version 2.15
+### Changelog
+- Added function: `read()`. Lets you get the input of an user. Like the standard `read()`, but more advanced.
+
 ## Version 2.14
 ### Changelog
 - Added function: `openRednet()`. Opens the first wireless modem it finds.
