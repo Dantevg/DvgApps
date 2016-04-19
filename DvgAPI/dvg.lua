@@ -3,13 +3,13 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.15.2.1
+      VERSION 2.15.2.2
       DATE    19-04-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
 
-version = "2.15.2.1"
+version = "2.15.2.2"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
@@ -158,27 +158,27 @@ function read( input, exitEvent, exitParam, exitVal )
         return input, false, false, p
       else
         if p[1] == keys.backspace then
-          return input:sub( 1,-2 ), false, true, p
+          return input:sub( 1,-2 ), false, true, event, p
         elseif p[1] == keys.enter then
-          return input, true, false, p
+          return input, true, false, event, p
         end
       end -- End if exitEvent
 
     elseif event == "char" then
 
       if exitEvent == "char" then
-        if not exitParam or p[exitParam] == exitVal then return input, false, false, p end
+        if not exitParam or p[exitParam] == exitVal then return input, false, false, event, p end
       else
-        return input..p[1], false, true, p
+        return input..p[1], false, true, event, p
       end
 
     elseif event == exitEvent then
 
-      if not exitParam or p[exitParam] == exitVal then return input, false, false, p end
+      if not exitParam or p[exitParam] == exitVal then return input, false, false, event, p end
 
     else
 
-      return input, false, true, p
+      return input, false, true, event, p
 
     end -- End if event
   end -- End while true
