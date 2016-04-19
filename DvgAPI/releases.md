@@ -1,7 +1,8 @@
-## Version ~~2.15.1~~ 2.15.2
+## Version ~~2.15.1~~ ~~2.15.2~~ 2.15.2.2
 ### Changelog
 - **2.15.1**: Function `read()` now does now return `false` instead of `nil`.
 - **2.15.2**: Function `read()` now returns a table with the parameters as a fourth value.
+- **2.15.2.2**: Bugfix: function `read()` now returns the event as value 4 and the parameters in a table as value 5
 
 ## Version 2.15
 ### Changelog
