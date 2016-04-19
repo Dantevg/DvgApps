@@ -3,13 +3,13 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.15.1
-      DATE    05-04-2016
+      VERSION 2.15.2
+      DATE    19-04-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
 
-version = "2.15.1"
+version = "2.15.2"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
@@ -97,7 +97,7 @@ end
 
 function fill( text, to, char )
   if type( text ) ~= "string" or type( to ) ~= "number" then
-    error( "Expected string, number" )
+    error( "Expected string, number [,string]" )
   end
   if char and type( char ) ~= "string" then
     error( "Expected string, number [,string]" )
@@ -155,26 +155,26 @@ function read( input, exitEvent, exitParam, exitVal )
     if event == "key" then
 
       if exitEvent == "key" and (not exitParam or p[exitParam] == exitVal) then
-        return input, false, false
+        return input, false, false, p
       else
         if p[1] == keys.backspace then
-          return input:sub( 1,-2 ), false, true
+          return input:sub( 1,-2 ), false, true, p
         elseif p[1] == keys.enter then
-          return input, true, false
+          return input, true, false, p
         end
       end -- End if exitEvent
 
     elseif event == "char" then
 
       if exitEvent == "char" then
-        if not exitParam or p[exitParam] == exitVal then return input, false, false end
+        if not exitParam or p[exitParam] == exitVal then return input, false, false, p end
       else
-        return input..p[1], false, true
+        return input..p[1], false, true, p
       end
 
     elseif event == exitEvent then
 
-      if not exitParam or p[exitParam] == exitVal then return input, false, false end
+      if not exitParam or p[exitParam] == exitVal then return input, false, false, p end
 
     end -- End if event
   end -- End while true
