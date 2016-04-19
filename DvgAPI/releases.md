@@ -1,6 +1,13 @@
+## Version ~~2.15.1~~ 2.15.2
+### Changelog
+- **2.15.1**: Function `read()` now does now return `false` instead of `nil`.
+- **2.15.2**: Function `read()` now returns a table with the parameters as a fourth value.
+
 ## Version 2.15
 ### Changelog
 - Added function: `read()`. Lets you get the input of an user. Like the standard `read()`, but more advanced.
+
+<br>
 
 ## Version 2.14
 ### Changelog
@@ -46,13 +53,9 @@
 ### Changelog
 - Function `centerColor` now accepts an optional, third argument, `y`, like the original function.
 
-<br>
-
 ## Version 2.9.1
 ### Changelog
 - Fixed leftover from old code
-
-<br>
 
 ## Version 2.9 unstable
 ### Changelog
