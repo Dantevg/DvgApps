@@ -1,4 +1,4 @@
-# Dvg API <sup><sub>`v2.15.1`</sub></sup>
+# Dvg API <sup><sub>`v2.15.2`</sub></sup>
 ### Installation
 This API will automatically be installed together with `.DvgFiles`.
 
@@ -55,6 +55,7 @@ An alternative to the default `read()` function, but works very different. It is
 1. string `input`. The input that it has received and modified.
 2. boolean `userPresedEnter` or `enterPressed`. If the user pressed enter, this will be `true`, so you can decide to use the input or not. If the `exitEvent` if pulled, this will be `false`.
 3. boolean `continue`. This will be `true` if the user only pressed a char. If the user presses `enter` or the `exitEvent` is pulled, this will be `false`.
+4. table with all parameters af return values of `os.pullEvent()`, with the `event` value as index 1.
 
 **Example usage:**
 ```lua
@@ -64,13 +65,14 @@ while true do -- Loop to get every key
   term.clear()
   term.setCursorPos( 1,1 )
   write( input ) -- Write the input so far
-  input, enterPressed, continue = dvg.read( input, "key", 1, keys.leftCtrl )
+  input, enterPressed, continue, param = dvg.read( input, "key", 1, keys.leftCtrl )
   if not continue then -- Do not continue to get chars
     if enterPressed then print() print( "Your input was "..input ) end -- User submitted by pressing enter
     break -- Stop getting chars
   end
 end
 term.setCursorBlink( false )
+print( "Pulled event "..p[1] )
 ```
 
 #### `dvg.checkupdate( url [, current] )`
