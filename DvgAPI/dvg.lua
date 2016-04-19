@@ -3,13 +3,13 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.15.2
+      VERSION 2.15.2.1
       DATE    19-04-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
 
-version = "2.15.2"
+version = "2.15.2.1"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
@@ -175,6 +175,10 @@ function read( input, exitEvent, exitParam, exitVal )
     elseif event == exitEvent then
 
       if not exitParam or p[exitParam] == exitVal then return input, false, false, p end
+
+    else
+
+      return input, false, true, p
 
     end -- End if event
   end -- End while true
