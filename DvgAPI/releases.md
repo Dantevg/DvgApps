@@ -1,3 +1,7 @@
+## Version 2.15.3
+### Changelog
+- Bugfix: Function `openRednet()` now works with broadcasting.
+
 ## Version ~~2.15.2~~ 2.15.2.2
 ### Changelog
 - **2.15.2**: Function `read()` now returns a table with the parameters as a fourth value.
@@ -16,6 +20,9 @@
 ## Version 2.14
 ### Changelog
 - Added function: `openRednet()`. Opens the first wireless modem it finds.
+
+### Known bugs
+- Function `openRednet()` does not work with broadcasting. Fixed in [version 2.15.3](#version-2153)
 
 <br>
 
