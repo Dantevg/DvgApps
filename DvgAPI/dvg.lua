@@ -295,6 +295,7 @@ function openRednet()
   for _, modem in pairs( modems ) do
     if modem.isWireless() then
       modem.open( os.getComputerID() ) -- Same as rednet.open()
+      modem.open( 65535 ) -- For broadcasting
       return true
     end
     return false, "No wireless modems"
