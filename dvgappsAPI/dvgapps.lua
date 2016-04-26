@@ -3,12 +3,12 @@
       Dvg Apps framework
       by DvgCraft
 
-      VERSION  0.9.17.20
-      DATE     26-02-2016
+      VERSION  0.9.18
+      DATE     26-04-2016
 
 ]]--
 
-version = "0.9.17.20"
+version = "0.9.18"
 
 -- Start config
 --[[ Docs for cfg.x() config file
@@ -16,13 +16,14 @@ version = "0.9.17.20"
   {
     ["exit"] = {
       type = "exit",
-      name = "Exit",
+      name = "Exit", -- Not required here
       val = true, -- True for save before exit, false for not save.
     },
     ["sometext"] = {
       type = "text",
       name = "Some text",
       val = "your text",
+      description = "E.g. Hello world!",
     },
     ["aBoolean"] = {
       type = "boolean", -- "bool" is also accepted
@@ -68,6 +69,8 @@ function cfg.loadFile( path ) -- v1.0
   t.s = 1
   t.running = true
   t.path = path
+  t.valPos = 40
+  t.indicator = true
   return t
 end
 function cfg.saveFile( menu, path ) -- v1.0
@@ -81,6 +84,8 @@ function cfg.saveFile( menu, path ) -- v1.0
   menu.s = nil
   menu.running = nil
   menu.path = nil
+  menu.valPos = nil
+  menu.indicator = nil
   local t = {}
 
   for i = 1, #menu do
@@ -98,7 +103,7 @@ function cfg.printMenu( menu, headeropt ) -- v1.0
     error( "Expected table [, table]" )
   end
 
-  term.setCursorPos( 1,3 )
+  term.setCursorPos( 1,2 )
   for i = 1, #menu do
     term.setBackgroundColor( colors.white )
     term.setTextColor( colors.black )
@@ -113,49 +118,55 @@ function cfg.printMenu( menu, headeropt ) -- v1.0
         term.setCursorPos( 1,1 )
       end
       if i == menu.s then
-        write( "> ", headeropt.action and headeropt.action or "x" )
+        write( (menu.indicator and "> " or "  "), headeropt.action and headeropt.action or "x" )
       else
         write( "  ", headeropt.action and headeropt.action or "x" )
       end
       if headeropt.size == 5 then
-        term.setCursorPos( 1,6 )
+        term.setCursorPos( 1,5 )
       elseif headeropt.size == 3 then
-        term.setCursorPos( 1,4 )
+        term.setCursorPos( 1,3 )
       else
-        term.setCursorPos( 1,2 )
+        term.setCursorPos( 1,1 )
       end
     else
       if i == menu.s then
-        write( "> "..menu[i].name )
+        write( (menu.indicator and "> " or "  ") .. (menu[i].name and menu[i].name or "") )
       else
-        write( "  "..menu[i].name )
+        write( "  " .. (menu[i].name and menu[i].name or "") )
       end
-      term.setCursorPos( 40,y )
+      term.setCursorPos( menu.valPos and menu.valPos or 40,y )
 
       if menu[i].type == "text" then
         write( menu[i].val )
 
       elseif menu[i].type == "boolean" or menu[i].type == "bool" then
-        term.setBackgroundColor( colors.lightGray )
-        write( "   " )
         if menu[i].val == true then
-          term.setCursorPos( 41,y )
+          term.setCursorPos( menu.valPos and menu.valPos or 40,y )
           term.setBackgroundColor( colors.green )
-          write( "  " )
+          write( "   " )
         elseif menu[i].val == false then
-          term.setCursorPos( 40,y )
+          term.setCursorPos( menu.valPos and menu.valPos or 40,y )
           term.setBackgroundColor( colors.red )
-          write( "  " )
+          write( "   " )
         end
-      end --End type if
-    end --End header if
+      end --End if type
+
+      if menu[i].description then
+        term.setCursorPos( 4,y+1 )
+        term.setBackgroundColor( colors.white )
+        term.setTextColor( colors.lightGray )
+        write( menu[i].description )
+      end -- End if description
+    end --End if headeropt
+    print()
     print()
   end --End for loop
 end
 
 function cfg.keyPressed( menu, key, headeropt ) -- v1.0
-  if type( key ) ~= "number" or type( menu ) ~= "table" then
-    error( "Expected table, number" )
+  if type( key ) ~= "number" or type( menu ) ~= "table" or (headeropt and type( headeropt ) ~= "table") then
+    error( "Expected table, number [, table]" )
   end
 
   if key == keys.up and menu.s > 1 then
@@ -169,6 +180,35 @@ function cfg.keyPressed( menu, key, headeropt ) -- v1.0
   return menu
 end
 
+function cfg.mouseClicked( menu, x, y, headeropt ) -- v1.0
+  if type(menu) ~= "table" or type(x) ~= "number" or type(y) ~= "number" or (headeropt and type(headeropt) ~= "table") then
+    error( "Expected table, number, number [, table]" )
+  end
+
+  local headerHeight = 2
+  if headeropt then
+    headerHeight = headeropt.size and headeropt.size or 1
+  end
+
+  if headeropt and x >= 1 and x <= 3 and ((headeropt.size and (headeropt.size == 3 or headeropt.size == 5) and y == 2) or ((not headeropt.size or headeropt.size == 1) and y == 1)) then
+    menu.s = 1
+    cfg.action( menu, headeropt )
+  else
+    local descCount = 0
+    for i = 1, #menu do
+      if y == headerHeight + i*2 - 2 + descCount then
+        if menu[i].type == "function" or menu[i].type == "exit" or x >= menu.valPos then
+          menu.s = i
+          cfg.action( menu, headeropt )
+          break
+        end
+      end -- End if y
+      if menu[i].description then descCount = descCount + 1 end
+    end -- End for
+  end -- End if headeropt
+  return menu
+end
+
 function cfg.action( menu, headeropt ) -- v1.0
   if menu[menu.s].type == "exit" then
     if menu[menu.s].val then
@@ -177,21 +217,23 @@ function cfg.action( menu, headeropt ) -- v1.0
     menu.running = false
 
   elseif menu[menu.s].type == "text" then
-    local yPos = 1 + menu.s
-    if headeropt.size == 5 then
-      yPos = 5 + menu.s
-    elseif headeropt.size == 3 then
-      yPos = 3 + menu.s
+    local descCount = 0
+    for i = 1, menu.s do
+      if menu[i].description then descCount = descCount + 1 end
     end
-    term.setCursorPos( 40,yPos )
+    local yPos = menu.s * 2 + descCount
+    if headeropt and headeropt.size then
+      yPos = headeropt.size + menu.s * 2 - 2 + descCount
+    end
+    term.setCursorPos( menu.valPos and menu.valPos or 40,yPos )
     term.setTextColor( colors.lightGray )
     write( menu[menu.s].val )
-    term.setCursorPos( 40,yPos)
+    term.setCursorPos( menu.valPos and menu.valPos or 40,yPos)
     term.setTextColor( colors.black )
     menu[menu.s].val = read()
 
   elseif menu[menu.s].type == "boolean" then
-    menu[menu.s].val = dvg.switchBool( menu[menu.s].val )
+    menu[menu.s].val = not menu[menu.s].val
 
   elseif menu[menu.s].type == "function" then
     loadstring( menu[menu.s].val )()
