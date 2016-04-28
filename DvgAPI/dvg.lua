@@ -3,13 +3,13 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.15.2.2
-      DATE    19-04-2016
+      VERSION 2.15.3
+      DATE    26-04-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
 
-version = "2.15.2.2"
+version = "2.15.3"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
