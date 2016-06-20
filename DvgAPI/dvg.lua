@@ -3,13 +3,13 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.15.3
-      DATE    26-04-2016
+      VERSION 2.16
+      DATE    20-06-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
 
-version = "2.15.3"
+version = "2.16"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
@@ -90,7 +90,7 @@ function center( text, y )
   local curX, curY = term.getCursorPos()
   local w, _ = term.getSize()
   x = math.ceil( ( w/2 ) - ( string.len(text)/2 ) + 1 )
-  term.setCursorPos( x, y and y or curY )
+  term.setCursorPos( math.max(x,1), y and y or curY )
   write( text )
   term.setCursorPos( curX,curY )
 end
@@ -112,18 +112,11 @@ function fill( text, to, char )
   return text
 end
 
-box = {}
-function box.new( self, x,y,w,h, bgcolor )
-  if not tonumber(x) or not tonumber(y) or not tonumber(w) or not tonumber(h) or not tonumber(bgcolor) then
-    error( "Expected x, y, width, height, bgcolor" )
-  end
-  return setmetatable( {x=x, y=y, w=w, h=h, bgcolor=bgcolor}, {__index = box} )
-end
-function box:draw()
-  term.setBackgroundColor( self.bgcolor )
-  for i = 1, self.h do
-    term.setCursorPos( self.x, self.y-1+i )
-    write( string.rep(" ", self.w) )
+function box( x, y, w, h, bgcolor )
+  term.setBackgroundColor( bgcolor )
+  for i = 1, h do
+    term.setCursorPos( x, y-1+i )
+    write( string.rep(" ", w) )
   end
 end
 
@@ -196,7 +189,7 @@ function checkupdate( url, current )
     if event == "http_success" then
       local version = source.readAll()
       if current then
-        if current == version then
+        if current >= version then
           return false
         else
           return true
@@ -226,6 +219,45 @@ function compareVersions( new, old )
     end
   end
   return false
+end
+
+
+function decToBase( n, base )
+  if type( n ) ~= "number" or (base and type( base ) ~= "number") then
+    error( "Expected number [, base]", 2 )
+  elseif base < 2 or base > 36 then
+    error( "Base can only be <= 10", 2 )
+  end
+  if base == 10 then
+    return tostring( num )
+  elseif base == 8 then
+    return string.format( tostring(n), "%o" )
+  elseif base == 16 then
+    return string.format( tostring(n), "%X" )
+  end
+
+  local digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  local out = ""
+  n = math.floor( n )
+
+  if n < 0 then -- Negative
+    out = "-"
+    n = -n
+  end
+  while n > 0 do
+    local d = ( n % base ) + 1
+    n = math.floor( n / base )
+    out = digits:sub( d,d ) .. out
+  end
+  return out
+end
+function baseToDec( n, base )
+  if (type( n ) ~= "string" and type( n ) ~= "number") or (base and type( base ) ~= "number") then
+    error( "Expected number [, base]", 2 )
+  elseif base < 2 or base > 36 then
+    error( "Base can only be <= 10", 2 )
+  end
+  return tonumber( n, base )
 end
 
 
