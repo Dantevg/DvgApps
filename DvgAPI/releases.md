@@ -1,3 +1,21 @@
+## Version 2.17
+### [Changelog](https://github.com/Dantevg/DvgApps/commit/81614d899c2f45551166ae101ed2da755dbaad4b)
+- Added fucntion `sub( txt, pos )`. Returns the char at `pos` of `txt`.
+- Added function `readFile( path, tbl )`. Returns the contents of the file at `path`, unserialized if `tbl` is true.
+- Added function `writeFile( path, contents [, mode] )`. Opens the file at `path` in `mode` mode, and writes `contents`.
+- Bugfix: function `isBool()` now returnt `true` even if the value is `false`. (used to be `false` at `false`)
+
+<br>
+
+## Version 2.16
+### [Changelog](https://github.com/Dantevg/DvgApps/commit/6f46c81a7615f9d126404434c7fff7366cb1e6dd)
+- Improved `center()` function
+- Turn back `box()` function, wrong usage of metatables
+- Improved `checkUpdate()` function
+- Added `decToBase()` and `baseToDec()` functions
+
+<br>
+
 ## Version 2.15.3
 ### Changelog
 - Bugfix: Function `openRednet()` now works with broadcasting.
