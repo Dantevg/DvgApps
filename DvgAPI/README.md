@@ -1,4 +1,4 @@
-# Dvg API <sup><sub>`v2.15.2.2`</sub></sup>
+# Dvg API <sup><sub>`v2.17`</sub></sup>
 ### Installation
 This API will automatically be installed together with `.DvgFiles`.
 
@@ -30,11 +30,8 @@ Centers given `text` horizontally. If `y` is given, centers at given `y`, else c
 #### `dvg.fill( text, to [, char] )` <sup><sub>`2.11`</sub></sup>
 Fills `text` length to `to`, with spaces or `char`.
 
-#### `dvg.box:new( x, y, w, h, bgcolor )`
-Returns a table with given box properties, to be drawn later with `myBox:draw()`. Note the use of a colon instead of a dot. You can edit the given values in the table returned. Ex: `myBox.x = 30`.
-
-#### `box:draw()`
-Draws a box on given coordinates (`x` and `y`) with the given size (`w` and `h`) and sets the given `bgcolor`. To use, replace `box` with the variable you stored `box:new()`'s returned values. Note the use of a colon instead of a dot.
+#### `dvg.box( x, y, w, h, bgcolor )`
+Draws a box on given coordinates (`x` and `y`) with the given size (`w` and `h`) and sets the given `bgcolor`.
 
 #### `dvg.scroll( text, height, offset )`
 Returns table `text` with stripped ends, so it fits in the `height`. `Offset` specifies the height already scrolled.
@@ -88,6 +85,18 @@ Returns `true` or `false` wether the comparison stated succeeded. Also returns t
 dvg.compareVersions( "1.0.32", "1.2.8" ) -- False, 2
 dvg.compareVersions( "2.7.1", "2.7" )    -- True, 3
 ```
+
+#### `dvg.readFile( path [, tbl] )`  <sup><sub>`2.17`</sub></sup>
+Returns the contens of the file at `path`, unserialized if `tbl` is true.
+
+#### `dvg.writeFile( path, contents [, mode] )`  <sup><sub>`2.17`</sub></sup>
+Opens the file at `path` in `mode` mode, else in `w` mode, and writes `contents`. Returns `nil` if file is in a read-only location, otherwise `true`.
+
+#### `dvg.decToBase( num, base )`  <sup><sub>`2.16`</sub></sup>
+Returns the decimal number (string value!) `num` (number) in base `base` (number 2-36).
+
+#### `dvg.baseToDec( num, base )`  <sup><sub>`2.16`</sub></sup>
+Returns the base-n number `num` (string value!) in a decimal number. Note you can better use `tonumber( num, base )` directly here.
 
 #### `dvg.toBool( var )` and `dvg.toInt( var )`
 Converts the `var` to a boolean or a number (`0` or `1`).
