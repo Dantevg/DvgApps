@@ -3,13 +3,13 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.16
+      VERSION 2.17
       DATE    20-06-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
 
-version = "2.16"
+version = "2.17"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
@@ -110,6 +110,10 @@ function fill( text, to, char )
     end
   end
   return text
+end
+
+function sub( txt, pos )
+  return string.sub( txt, pos, pos )
 end
 
 function box( x, y, w, h, bgcolor )
@@ -222,6 +226,22 @@ function compareVersions( new, old )
 end
 
 
+function readFile( path, tbl )
+  local file = fs.open( path, "r" )
+  local contents = file.readAll()
+  if tbl then contents = textutils.unserialize( contents ) end
+  file.close()
+  return contents
+end
+function writeFile( path, contents, mode )
+  if fs.isReadOnly( path ) then return nil end
+  local file = fs.open( path, mode and mode or "w" )
+  file.write( contents )
+  file.close()
+  return true
+end
+
+
 function decToBase( n, base )
   if type( n ) ~= "number" or (base and type( base ) ~= "number") then
     error( "Expected number [, base]", 2 )
@@ -285,17 +305,10 @@ function isSide( side )
   return false
 end
 function isBool( var, txt )
-  if txt then
-    if var == true or var == "true" then
-      return true
-    elseif var == false or var == "false" then
-      return false
-    end
-  else
-    if var == true or var == false then
-      return true
-    end
+  if var == true or var == false or ( txt and (var == "true" or var == "false") ) then
+    return true
   end
+  return false
 end
 function isInt( num )
   if math.floor( num ) == num and math.ceil( num ) == num then
