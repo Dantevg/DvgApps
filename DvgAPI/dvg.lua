@@ -3,13 +3,13 @@
       Dvg API
       by DvgCraft
 
-      VERSION 2.17.1.2
+      VERSION 2.17.2
       DATE    23-06-2016
       GITHUB  github.com/Dantevg/DvgApps (/tree/master/DvgAPI)
 
 ]]--
 
-version = "2.17.1.2"
+version = "2.17.2"
 
 
 sides = { "right", "left", "top", "bottom", "back", "front" }
@@ -107,7 +107,7 @@ function fill( text, to, char )
     inv = true
     to = to * -1
   end
-  while #text <= to do
+  while #text < to do
     if char then
       text = (inv and char..text or text..char)
     else
