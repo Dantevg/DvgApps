@@ -5,8 +5,5 @@
       
 ]]--
 
-local path = string.lower( shell.getRunningProgram() )
-
-for prog in string.gmatch( path, "(%l+)" ) do
-  shell.run( "/.DvgFiles/data/"..prog.."/"..prog )
-end
+local prog = fs.getName( string.lower(shell.getRunningProgram()) )
+shell.run( "/.DvgFiles/data/"..prog.."/"..prog )
