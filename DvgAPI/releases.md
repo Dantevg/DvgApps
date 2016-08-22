@@ -1,5 +1,29 @@
-## Version 2.17
-### [Changelog](https://github.com/Dantevg/DvgApps/commit/81614d899c2f45551166ae101ed2da755dbaad4b)
+## [Version 2.20.1](https://github.com/Dantevg/DvgApps/commit/6c640adbab57a41f71f4844bed54c821f8b6719a)
+### Changelog
+- Added table `color` with color converting and manipulating functions:
+  - `color.complementary`: `table` with all complementary colors.
+  - `color.nearest()`: returns the nearest CC color in HSL. <br><br>
+  - `color.colorToHex`: `table` with all HEX values for all CC colors.
+  - `color.hexToColor`: `table` with CC color values for HEX values. <br><br>
+  - `color.colorToRgb()`: converts a CC color value to RGB.
+  - `color.rgbToColor()`: converts RGB to CC color value. <br><br>
+  - `color.hexToRgb()`: converts HEX to RGB.
+  - `color.rgbToHex()`: converts RGB to HEX. <br><br>
+  - `color.rgbToHsl()`: converts RGB to HSL.
+  - `color.hslToRgb()`: converts HSL to RGB. <br><br>
+- Moved `colorToName()` and `nameToColor()` functions to `color` table.  
+- Added function `nearest( values, value )`. Finds the nearest `value` of all number values in `values`.
+- Function `writeFile()` now also accepts tables to be serialized as input.
+- Bugfix: function `decToBase()` now returns a proper error when given a base value <2 or >36.
+- Bugfix: function `decToBase()` now works with base 8 andd 16 numbers.
+- Less errors
+- Errors now show your program's line instead of the line in the API (e.g. [Line 286](https://github.com/Dantevg/DvgApps/commit/6c640adbab57a41f71f4844bed54c821f8b6719a#diff-58eb946d2b84534e0a342b7e3bc665a6R286))
+- Added section markers inside code
+
+<br>
+
+## [Version 2.17](https://github.com/Dantevg/DvgApps/commit/81614d899c2f45551166ae101ed2da755dbaad4b)
+### Changelog
 - Added fucntion `sub( txt, pos )`. Returns the char at `pos` of `txt`.
 - Added function `readFile( path, tbl )`. Returns the contents of the file at `path`, unserialized if `tbl` is true.
 - Added function `writeFile( path, contents [, mode] )`. Opens the file at `path` in `mode` mode, and writes `contents`.
@@ -7,8 +31,8 @@
 
 <br>
 
-## Version 2.16
-### [Changelog](https://github.com/Dantevg/DvgApps/commit/6f46c81a7615f9d126404434c7fff7366cb1e6dd)
+## [Version 2.16](https://github.com/Dantevg/DvgApps/commit/6f46c81a7615f9d126404434c7fff7366cb1e6dd)
+### Changelog
 - Improved `center()` function
 - Turn back `box()` function, wrong usage of metatables
 - Improved `checkUpdate()` function
@@ -27,7 +51,7 @@
 
 ## Version 2.15.1
 ### Changelog
-- Function `read()` now does now return `false` instead of `nil`.
+- Function `read()` does now return `false` instead of `nil`.
 
 ## Version 2.15
 ### Changelog
@@ -37,7 +61,7 @@
 
 ## Version 2.14
 ### Changelog
-- Added function: `openRednet()`. Opens the first wireless modem it finds.
+- Added function: `openRednet()`. Opens all wireless modems it finds.
 
 ### Known bugs
 - Function `openRednet()` does not work with broadcasting. Fixed in [version 2.15.3](#version-2153)
