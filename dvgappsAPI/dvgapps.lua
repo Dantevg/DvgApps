@@ -3,37 +3,40 @@
       Dvg Apps framework
       by DvgCraft
 
-      VERSION  0.9.18
-      DATE     26-04-2016
+      DATE     22-08-2016
 
 ]]--
 
-version = "0.9.18"
+version = "0.9.20"
 
 -- Start config
 --[[ Docs for cfg.x() config file
   config file (table) format:
   {
     ["exit"] = {
+      key = "exit",
       type = "exit",
       name = "Exit", -- Not required here
       val = true, -- True for save before exit, false for not save.
     },
     ["sometext"] = {
+      key = "sometext",
       type = "text",
       name = "Some text",
       val = "your text",
       description = "E.g. Hello world!",
     },
     ["aBoolean"] = {
+      key = "aBoolean",
       type = "boolean", -- "bool" is also accepted
       name = "A boolean",
       val = true,
     },
     ["helloFunction"] = {
+      key = "helloFunction",
       type = "function",
       name = "Do this",
-      val = "print('Hello there!'); os.sleep(1)",
+      val = 'print("Hello there!") os.sleep(1)',
     },
     ["hidden"] = {
       type = "hidden", -- Will be ignored by cfg.printMenu, no name field required
@@ -44,7 +47,7 @@ version = "0.9.18"
 
 cfg = {}
 
-function cfg.loadFile( path ) -- v1.0
+function cfg.loadCfg( path ) -- v1.0
   if not fs.exists( path ) then
     error( "File does not exist" )
   end
@@ -58,13 +61,25 @@ function cfg.loadFile( path ) -- v1.0
   end
 
   local t = {}
-  local i = 1
-  for var, val in pairs( tStart ) do
-    t[i] = val
-    t[i].key = var
-    i = i+1
+  for i = 1, #tStart do
+    t[tStart[i].key] = tStart[i]
   end
 
+  t.path = path
+  return t
+end
+function cfg.loadFile( path ) -- v1.0
+  if not fs.exists( path ) then
+    error( "File does not exist" )
+  end
+
+  local file = fs.open( path, "r" )
+  local t = textutils.unserialize( file.readAll() )
+  file.close()
+
+  if not t then return
+    error( "File does not contain correct table" )
+  end
 
   t.s = 1
   t.running = true
@@ -236,7 +251,7 @@ function cfg.action( menu, headeropt ) -- v1.0
     menu[menu.s].val = not menu[menu.s].val
 
   elseif menu[menu.s].type == "function" then
-    loadstring( menu[menu.s].val )()
+    load( menu[menu.s].val )()
 
   end
 end
@@ -253,6 +268,26 @@ function cfg.doMenu( menu ) -- v1.0
 end
 
 -- End config
+
+function scrollbar( x, y, h, current, max, txt, bg )
+  if h < 2 then error( 2, "Scrollbar must be > 1" ) end
+  if txt then term.setTextColor( txt ) end
+  if bg then term.setBackgroundColor( bg ) end
+  term.setCursorPos( x, y )
+  write( "^" )
+  for i = 1, h-2 do
+    term.setCursorPos( x, y+i )
+    write( "|" )
+  end
+  term.setCursorPos( x, y+h-1 )
+  write( "v" )
+  if h > 2 then
+    local percentage = current / max
+    term.setCursorPos( x, y + percentage*(h-3)+1 )
+    write( "=" )
+    return y + percentage*(h-3)+1
+  end
+end
 
 --[[ Docs for header( text, opt )
   opt options: (you don't have to declare them all)
@@ -293,9 +328,9 @@ function header( text, opt ) -- v1.0
     term.setCursorPos( 1,2 )
   end
   if opt.action then
-    write( "  "..opt.action.." "..text )
+    write( " "..opt.action.." "..text )
   else
-    write( "  x "..text )
+    write( " x "..text )
   end
 
   if opt.btns then
@@ -310,6 +345,8 @@ function header( text, opt ) -- v1.0
         if type( opt.btns[place][i] ) ~= "number" then
           if place ~= "bottom" then
             pos = pos - #opt.btns[place][i] - 3
+            btnsPos[place][#opt.btns[place]+1-i] = {}
+            btnsPos[place][#opt.btns[place]+1-i].s, btnsPos[place][#opt.btns[place]+1-i].e = pos, pos + #opt.btns[place][i] + 1
           end
           if opt.size == 1 then
             term.setCursorPos( pos, 1 )
@@ -319,9 +356,9 @@ function header( text, opt ) -- v1.0
             term.setCursorPos( pos, 4 )
           end
           write( " "..opt.btns[place][i].." " )
-          btnsPos[place][i] = {}
-          btnsPos[place][i].s, btnsPos[place][i].e = pos, pos + #opt.btns[place][i] + 2
           if place == "bottom" then
+            btnsPos[place][i] = {}
+            btnsPos[place][i].s, btnsPos[place][i].e = pos, pos + #opt.btns[place][i] + 1
             pos = pos + #opt.btns[place][i] + 3
           end
         else
@@ -334,10 +371,11 @@ function header( text, opt ) -- v1.0
       end -- End for loop
     end -- End function
     local function turn()
-      local t = opt.btns.top
-      for i = 1, #t do
-        opt.btns.top[ #t-i+1 ] = t[i]
+      local t = {}
+      for i = 1, #opt.btns.top do
+        t[ #opt.btns.top-i+1 ] = opt.btns.top[i]
       end
+      opt.btns.top = t
     end
 
     if opt.btns.top then turn() printBtns( "top" ) end
